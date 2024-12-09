@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.project.mine.SpMineMapper">
+
+    <select id="selectUserByMineId" resultType="com.pj.project.user.SpUser">
+        select *
+        from sp_user JOIN sp_user_mine
+        on sp_user.id = sp_user_mine.user_id
+        where sp_user_mine.`mine_id` = #{mine id}
+
+    </select>
+</mapper>

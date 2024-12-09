@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.project.message.SpMessageMapper">
+
+    <!--    批量删除-->
+    <delete id="deleteByIds">
+        delete from sp_message
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--    查询所有信息-->
+    <select id="getMessageList" resultType="com.pj.project.message.Message">
+        select * from sp_message
+        where 1 = 1
+        <if test="warnTypeCodes.size() > 0">
+            and
+            JSON_EXTRACT(content, '$.warn_type_code') in
+            <foreach collection="warnTypeCodes" item="warnTypeCode" open="(" separator="," close=")">
+                #{warnTypeCode}
+            </foreach>
+        </if>
+        <if test="sensorTypeCodes.size()>0">
+            and
+            JSON_EXTRACT(content, '$.sensor_type_code') in
+            <foreach collection="sensorTypeCodes" item="sensorTypeCode" open="(" separator="," close=")">
+                #{sensorTypeCode}
+            </foreach>
+        </if>
+        <if test="sTime != null">
+            and created_time &gt;= #{sTime}
+        </if>
+
+        <!-- Check for end time -->
+        <if test="eTime != null">
+            and created_time &lt;= #{eTime}
+        </if>
+        order by id desc
+
+
+    </select>
+
+</mapper>

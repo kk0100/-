@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.project.mine.SpUserMineMapper">
+
+    <insert id="insertByMineId">
+        insert into sp_user_mine(user_id, mine_id) values (#{userId}, #{mineId})
+
+    </insert>
+    <delete id="deleteByUserId">
+        delete from sp_user_mine where user_id = #{userId}
+    </delete>
+    <select id="getMineByUserId" resultType="com.pj.project.mine.SpUserMine">
+        select * from sp_user_mine where user_id = #{userId}
+    </select>
+
+</mapper>
